@@ -1,0 +1,47 @@
+{
+  "id" : null,
+  "name" : "F5 Big-IP ASM Content Pack",
+  "description" : "This content pack is used to capture log data from F5's Big-IP Application Security Module.",
+  "category" : "Firewall",
+  "inputs" : [ {
+    "title" : "Big-IP ASM Syslog",
+    "configuration" : {
+      "recv_buffer_size" : 1048576,
+      "tls_client_auth_cert_file" : "",
+      "bind_address" : "0.0.0.0",
+      "store_full_message" : true,
+      "tls_cert_file" : "",
+      "port" : 1514,
+      "tls_key_password" : "",
+      "tls_key_file" : "",
+      "max_message_size" : 2097152,
+      "tls_client_auth" : "disabled",
+      "override_source" : "",
+      "allow_override_date" : true
+    },
+    "type" : "org.graylog2.inputs.syslog.tcp.SyslogTCPInput",
+    "global" : true,
+    "extractors" : [ {
+      "title" : "ASM",
+      "type" : "GROK",
+      "configuration" : {
+        "grok_pattern" : "ASM:unit_hostname=\"%{DATA:unit_hostname}\",management_ip_address=\"%{DATA:management_ip_address}\",http_class_name=\"%{DATA:http_class_name}\",web_application_name=\"%{DATA:web_application_name}\",policy_name=\"%{DATA:policy_name}\",policy_apply_date=\"%{DATA:policy_apply_date}\",violations=\"%{DATA:violations}\",support_id=\"%{DATA:support_id}\",request_status=\"%{DATA:request_status}\",response_code=\"%{DATA:response_code}\",ip_client=\"%{DATA:ip_client}\",route_domain=\"%{DATA:route_domain}\",method=\"%{DATA:method}\",protocol=\"%{DATA:protocol}\",query_string=\"%{DATA:query_string}\",x_forwarded_for_header_value=\"%{DATA:x-forwarded-for}\",sig_ids=\"%{DATA:sig_ids}\",sig_names=\"%{DATA:sig_names}\",date_time=\"%{DATA:timestamp;date;yyyy-MM-dd HH:mm:ss}\",severity=\"%{DATA:severity}\",attack_type=\"%{DATA:attack_type}\",geo_location=\"%{DATA:geo_location}\",ip_address_intelligence=\"%{DATA:ip_address_intelligence}\",username=\"%{DATA:username}\",session_id=\"%{DATA:session_id}\",src_port=\"%{DATA:src_port}\",dest_port=\"%{DATA:dest_port}\",dest_ip=\"%{DATA:dest_ip}\",sub_violations=\"%{DATA:sub_violations}\",virus_name=\"%{DATA:virus_name}\",uri=\"%{DATA:uri}\",request=\"%{DATA:request}\",violation_rating=\"%{DATA:violation_rating}\""
+      },
+      "converters" : [ ],
+      "order" : 0,
+      "cursor_strategy" : "COPY",
+      "target_field" : "message",
+      "source_field" : "message",
+      "condition_type" : "NONE",
+      "condition_value" : ""
+    } ],
+    "static_fields" : { }
+  } ],
+  "streams" : [ ],
+  "outputs" : [ ],
+  "dashboards" : [ ],
+  "grok_patterns" : [ {
+    "name" : "DATA",
+    "pattern" : ".*?"
+  } ]
+}
